@@ -1,0 +1,106 @@
+{
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Crear cuenta",
+    "logout": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "name": "Nombre completo",
+    "role": "Soy...",
+    "role_coach": "Entrenador",
+    "role_trainee": "Alumno",
+    "no_account": "¿No tienes cuenta?",
+    "have_account": "¿Ya tienes cuenta?",
+    "register_cta": "Regístrate",
+    "login_cta": "Inicia sesión"
+  },
+  "coach": {
+    "trainees": {
+      "title": "Mis Alumnos",
+      "empty": "Aún no tienes alumnos. ¡Invita al primero!",
+      "last_workout": "Último entreno",
+      "total_sessions": "sesiones"
+    },
+    "invite": {
+      "title": "Invitar Alumno",
+      "generate": "Generar enlace de invitación",
+      "share": "Compartir enlace",
+      "expiry": "El enlace es válido por 7 días",
+      "copy": "Copiar enlace"
+    },
+    "progress": {
+      "title": "Progreso",
+      "select_exercise": "Selecciona un ejercicio",
+      "no_data": "Sin datos para este ejercicio",
+      "weight": "Peso máximo",
+      "range_30": "Últimos 30 días",
+      "range_90": "Últimos 90 días",
+      "range_all": "Todo el tiempo"
+    }
+  },
+  "trainee": {
+    "log": {
+      "title": "Nueva Sesión",
+      "add_exercise": "Agregar ejercicio",
+      "add_set": "Agregar serie",
+      "reps": "Reps",
+      "weight": "Peso",
+      "rest": "Descanso (seg)",
+      "submit": "Guardar sesión",
+      "submitting": "Guardando..."
+    },
+    "history": {
+      "title": "Mi Historial",
+      "empty": "Aún no has registrado ninguna sesión",
+      "sets": "series"
+    },
+    "progress": {
+      "title": "Mi Progreso"
+    }
+  },
+  "exercises": {
+    "search": "Buscar ejercicio...",
+    "all": "Todos",
+    "chest": "Pecho",
+    "back": "Espalda",
+    "shoulders": "Hombros",
+    "biceps": "Bíceps",
+    "triceps": "Tríceps",
+    "legs": "Piernas",
+    "glutes": "Glúteos",
+    "core": "Abdomen",
+    "cardio": "Cardio"
+  },
+  "profile": {
+    "title": "Perfil",
+    "weight_unit": "Unidad de peso",
+    "kg": "Kilogramos (kg)",
+    "lb": "Libras (lb)",
+    "logout": "Cerrar sesión"
+  },
+  "nav": {
+    "trainees": "Alumnos",
+    "invite": "Invitar",
+    "log": "Registrar",
+    "history": "Historial",
+    "progress": "Progreso",
+    "profile": "Perfil"
+  },
+  "invite": {
+    "join": "Únete al equipo de",
+    "subtitle": "Tu entrenador te ha invitado a GymCoach",
+    "cta": "Crear mi cuenta",
+    "invalid": "Este enlace no es válido o ha expirado"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Reintentar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "back": "Volver",
+    "ago_days": "Hace {{n}} días",
+    "today": "Hoy",
+    "yesterday": "Ayer"
+  }
+}

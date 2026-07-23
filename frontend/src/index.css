@@ -1,0 +1,57 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary: #6C3CE1;
+  --color-primary-light: #8B5CF6;
+  --color-secondary: #F97316;
+  --color-background: #F5F0FF;
+  --color-surface: #FFFFFF;
+  --color-text: #1A1A2E;
+  --color-muted: #8B8FA8;
+  --color-success: #10B981;
+  --color-error: #EF4444;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-sm: 0 2px 8px rgba(108, 60, 225, 0.08);
+  --shadow-md: 0 4px 20px rgba(108, 60, 225, 0.12);
+  --shadow-lg: 0 8px 40px rgba(108, 60, 225, 0.16);
+
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
