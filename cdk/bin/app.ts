@@ -21,6 +21,7 @@ const apiStack = new ApiStack(app, 'GymCoachApiStack', {
   workoutsTable: dbStack.workoutsTable,
   exerciseCatalogTable: dbStack.exerciseCatalogTable,
   invitesTable: dbStack.invitesTable,
+  appBaseUrl: process.env.APP_BASE_URL ?? "",
 });
 new SeedStack(app, 'GymCoachSeedStack', {
   env,

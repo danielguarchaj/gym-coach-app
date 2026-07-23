@@ -14,6 +14,7 @@ interface ApiStackProps extends cdk.StackProps {
   workoutsTable: dynamodb.Table;
   exerciseCatalogTable: dynamodb.Table;
   invitesTable: dynamodb.Table;
+  appBaseUrl: string;
 }
 
 const BACKEND_SRC = path.join(__dirname, '../backend/src');
@@ -31,6 +32,7 @@ export class ApiStack extends cdk.Stack {
       INVITES_TABLE: props.invitesTable.tableName,
       USER_POOL_ID: props.userPool.userPoolId,
       USER_POOL_CLIENT_ID: props.userPoolClient.userPoolClientId,
+      APP_BASE_URL: props.appBaseUrl,
     };
 
     const bundling = { minify: true, sourceMap: false };
