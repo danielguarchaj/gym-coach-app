@@ -11,6 +11,7 @@ export default function TraineeLayout() {
   const items = [
     { label: t('nav.log'), icon: '➕', path: '/trainee/log' },
     { label: t('nav.history'), icon: '📋', path: '/trainee/history' },
+    { label: t('nav.progress'), icon: '📈', path: '/trainee/progress' },
     { label: t('nav.profile'), icon: '👤', path: '/trainee/profile' },
   ]
 
