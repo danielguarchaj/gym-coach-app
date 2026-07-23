@@ -7,6 +7,7 @@ A mobile-first SaaS app for gym coaches to track trainee workout progress.
 ---
 
 ## Local Development
+-
 
 ### Prerequisites
 - Node 20+
