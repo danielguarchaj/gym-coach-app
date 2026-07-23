@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as path from 'path';
@@ -55,22 +56,29 @@ export class ApiStack extends cdk.Stack {
     const exercisesFn = fn(this, 'ExercisesFn', 'handlers/exercises.ts');
     const profileFn = fn(this, 'ProfileFn', 'handlers/profile.ts');
 
-    // DynamoDB permissions — least-privilege per function
-    props.usersTable.grantReadWriteData(authFn);
-    props.invitesTable.grantReadWriteData(authFn);
+    // DynamoDB permissions — addToRolePolicy instead of table.grant* to avoid cross-stack
+    // circular references that newer CDK versions create via DynamoDB resource-based policies.
+    const READ = ['dynamodb:GetItem', 'dynamodb:BatchGetItem', 'dynamodb:Query', 'dynamodb:Scan', 'dynamodb:ConditionCheckItem', 'dynamodb:DescribeTable'];
+    const WRITE = ['dynamodb:PutItem', 'dynamodb:UpdateItem', 'dynamodb:DeleteItem', 'dynamodb:BatchWriteItem', 'dynamodb:ConditionCheckItem'];
+    const RW = [...new Set([...READ, ...WRITE])];
 
-    props.invitesTable.grantReadWriteData(invitesFn);
-    props.usersTable.grantReadData(invitesFn);
+    const arns = (t: dynamodb.Table) => [t.tableArn, `${t.tableArn}/index/*`];
 
-    props.usersTable.grantReadData(traineesFn);
-    props.workoutsTable.grantReadData(traineesFn);
+    authFn.addToRolePolicy(new iam.PolicyStatement({ actions: RW, resources: arns(props.usersTable) }));
+    authFn.addToRolePolicy(new iam.PolicyStatement({ actions: RW, resources: arns(props.invitesTable) }));
 
-    props.workoutsTable.grantReadWriteData(sessionsFn);
-    props.exerciseCatalogTable.grantReadData(sessionsFn);
+    invitesFn.addToRolePolicy(new iam.PolicyStatement({ actions: RW,   resources: arns(props.invitesTable) }));
+    invitesFn.addToRolePolicy(new iam.PolicyStatement({ actions: READ, resources: arns(props.usersTable) }));
 
-    props.exerciseCatalogTable.grantReadData(exercisesFn);
+    traineesFn.addToRolePolicy(new iam.PolicyStatement({ actions: READ, resources: arns(props.usersTable) }));
+    traineesFn.addToRolePolicy(new iam.PolicyStatement({ actions: READ, resources: arns(props.workoutsTable) }));
 
-    props.usersTable.grantReadWriteData(profileFn);
+    sessionsFn.addToRolePolicy(new iam.PolicyStatement({ actions: RW,   resources: arns(props.workoutsTable) }));
+    sessionsFn.addToRolePolicy(new iam.PolicyStatement({ actions: READ, resources: arns(props.exerciseCatalogTable) }));
+
+    exercisesFn.addToRolePolicy(new iam.PolicyStatement({ actions: READ, resources: arns(props.exerciseCatalogTable) }));
+
+    profileFn.addToRolePolicy(new iam.PolicyStatement({ actions: RW, resources: arns(props.usersTable) }));
 
     // API Gateway
     const api = new apigateway.RestApi(this, 'GymCoachApi', {

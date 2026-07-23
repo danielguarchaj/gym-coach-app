@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as cr from 'aws-cdk-lib/custom-resources';
@@ -27,8 +28,10 @@ export class SeedStack extends cdk.Stack {
       },
     });
 
-    props.exerciseCatalogTable.grantWriteData(seedFn);
-    props.exerciseCatalogTable.grantReadData(seedFn);
+    seedFn.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['dynamodb:PutItem', 'dynamodb:GetItem', 'dynamodb:Scan'],
+      resources: [props.exerciseCatalogTable.tableArn],
+    }));
 
     const provider = new cr.Provider(this, 'SeedProvider', {
       onEventHandler: seedFn,
