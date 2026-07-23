@@ -27,7 +27,3 @@ new SeedStack(app, 'GymCoachSeedStack', {
   env,
   exerciseCatalogTable: dbStack.exerciseCatalogTable,
 });
-
-// Explicit dependency ordering
-apiStack.addDependency(authStack);
-apiStack.addDependency(dbStack);
