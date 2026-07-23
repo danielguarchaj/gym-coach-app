@@ -112,7 +112,7 @@ Success:    #10B981  (green for PRs / records)
 - **Subtle glassmorphism**: cards with `backdrop-filter: blur` and semi-transparent borders
 - **Animations**: page transitions via Framer Motion, micro-animations on buttons, animated chart entries
 - **Typography**: Inter or Plus Jakarta Sans — modern, readable on mobile
-- **Bottom navigation**: Coach sees Trainees / Progress / Profile; Trainee sees Log / History / Profile
+- **Bottom navigation**: Coach sees Trainees / Invitar / Perfil; Trainee sees Log / Historial / Progreso / Perfil
 
 ### Screens (MVP)
 

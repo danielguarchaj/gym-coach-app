@@ -15,30 +15,28 @@ See `PROPOSAL.md` for full architecture, data model, API surface, and implementa
 
 ## Stack
 
-- **Frontend**: React + TypeScript + Vite, hosted on S3 + CloudFront (or GitHub Pages for fast demo)
-- **Backend**: AWS Lambda (TypeScript, Node 20.x) behind API Gateway REST
-- **Auth**: Amazon Cognito User Pools (JWT, coach/trainee roles via custom attributes)
-- **Database**: DynamoDB (two tables: `Users`, `Workouts`)
+- **Frontend**: React + TypeScript + Vite, hosted on GitHub Pages (deployed via GitHub Actions)
+- **Backend**: AWS Lambda (TypeScript, Node 20.x) behind API Gateway REST — source lives in `cdk/backend/src/`
+- **Auth**: Amazon Cognito User Pools (JWT, coach/trainee roles via custom attributes; email verification required)
+- **Database**: DynamoDB (4 tables: `Users`, `Workouts`, `ExerciseCatalog`, `Invites`)
 - **Infra**: AWS CDK (TypeScript) — `cdk deploy --all` / `cdk destroy --all`
 - **CI/CD**: GitHub Actions
 
-## Repository Layout (target structure)
+## Repository Layout
 
 ```
 gym-coach-app/
-├── cdk/          — CDK stacks: auth-stack, api-stack, frontend-stack
-├── backend/      — Lambda handlers and DynamoDB service layer
-└── frontend/     — React SPA (pages, components, typed API client)
+├── cdk/                  — CDK stacks + Lambda handlers (bundled by esbuild at deploy time)
+│   ├── lib/              — auth-stack, database-stack, api-stack, seed-stack
+│   └── backend/src/      — Lambda source: handlers/, services/, types/, seed/
+└── frontend/             — React SPA (pages, components, typed API client)
 ```
 
-## Commands (once scaffolded)
+## Commands
 
 ```bash
-# Infrastructure
-cd cdk && npm run build && cdk deploy --all
-
-# Backend
-cd backend && npm run build && npm test
+# Infrastructure + backend (Lambda bundled by CDK esbuild, no separate build step)
+cd cdk && npm install && npx cdk deploy --all
 
 # Frontend
 cd frontend && npm run dev        # local dev

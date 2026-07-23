@@ -36,7 +36,7 @@ The coach account is created through the app's registration screen — there is 
 
 ### Steps
 
-1. Open the app (`http://localhost:5173` for local dev).
+1. Open the app (`http://localhost:5173` for local dev, or your GitHub Pages URL).
 2. Click **Registrarse** on the login screen.
 3. Fill in:
    - **Nombre**: your name
@@ -45,7 +45,9 @@ The coach account is created through the app's registration screen — there is 
 4. Select the **Coach** role (the selector appears when there is no invite token in the URL).
 5. Tap **Registrarse**.
 
-After registration you are logged in automatically and land on the Coach dashboard (Alumnos tab).
+**Email verification step:** Cognito sends a 6-digit confirmation code to your email. The app automatically advances to a second screen asking for this code. Enter the code and tap **Verificar y entrar**. If you entered the wrong email, tap **← Volver** to go back.
+
+After verification you are logged in and land on the Coach dashboard (Alumnos tab).
 
 ### Password policy (enforced by Cognito)
 
@@ -56,10 +58,6 @@ After registration you are logged in automatically and land on the Coach dashboa
 | Lowercase letter | Required |
 | Digit | Required |
 | Symbol | Not required |
-
-### Email verification
-
-If Cognito sends a confirmation code to your email before you can log in, check your inbox and enter the code when prompted. This depends on your Cognito User Pool configuration.
 
 ---
 
@@ -116,5 +114,7 @@ After the trainee registers, they appear automatically in the coach's **Alumnos*
 | "Invite not found" on landing page | Token expired (>7 days) or already used | Coach generates a new link |
 | "Invite already used" | Link was already claimed | Coach generates a new link |
 | Registration fails with password error | Password doesn't meet Cognito policy | Use 8+ chars with uppercase, lowercase, and a digit |
+| Verification code screen never appeared | Cognito auto-confirmed the account (shouldn't happen in prod) | Check Cognito User Pool settings; `autoVerify.email` should be `true` |
+| "UserNotConfirmedException" after registration | User tried to log in before completing email verification | Open the app again, re-register with the same email — Cognito will re-send the code |
 | Exercises list is empty | Seed Lambda didn't run or failed | Check CloudWatch logs for `SeedFunction`; redeploy with bumped `resourceVersion` |
-| Invite link opens the wrong URL | `APP_BASE_URL` not updated in CDK | Set `APP_BASE_URL` in `cdk/lib/api-stack.ts` to your real frontend URL and redeploy |
+| Invite link opens the wrong URL | `APP_BASE_URL` env variable not set in CDK | Set `APP_BASE_URL` as a GitHub Actions Variable (`vars.APP_BASE_URL`) in repo settings and redeploy |

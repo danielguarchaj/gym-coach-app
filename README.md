@@ -40,9 +40,9 @@ VITE_API_BASE_URL=https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod
 
 ---
 
-## GitHub Actions Secrets
+## GitHub Actions Secrets & Variables
 
-Add these to your repo settings → Secrets → Actions:
+Add these to **Repository secrets** (Settings → Secrets and variables → Actions → Repository secrets):
 
 | Secret | Description |
 |---|---|
@@ -52,6 +52,14 @@ Add these to your repo settings → Secrets → Actions:
 | `VITE_API_BASE_URL` | API Gateway URL from CDK output |
 | `VITE_COGNITO_USER_POOL_ID` | From CDK output |
 | `VITE_COGNITO_CLIENT_ID` | From CDK output |
+
+Add this to **Repository variables** (Settings → Secrets and variables → Actions → Variables):
+
+| Variable | Description |
+|---|---|
+| `APP_BASE_URL` | GitHub Pages URL, e.g. `https://username.github.io/gym-coach-app` — used by the invite link Lambda |
+
+> **Important:** Use Repository-level secrets/variables, not Environment-level. Environment secrets are only available to jobs that declare `environment: <name>` in the workflow, which the infrastructure pipeline does not.
 
 ---
 
