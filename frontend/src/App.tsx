@@ -15,9 +15,7 @@ import CoachInvite from './pages/coach/Invite'
 import TraineeLayout from './layouts/TraineeLayout'
 import TraineeLog from './pages/trainee/Log'
 import TraineeHistory from './pages/trainee/History'
-
-// Trainee progress — stub until Task 22 animation pass
-const TraineeProgress = () => <div style={{ padding: 24 }}>Progreso próximamente</div>
+import TraineeProgress from './pages/trainee/Progress'
 
 function RoleGuard({ role, children }: { role: 'COACH' | 'TRAINEE'; children: React.ReactNode }) {
   const { user, loading } = useAuth()

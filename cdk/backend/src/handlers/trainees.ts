@@ -11,13 +11,15 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const userId: string = claims['sub']
     const role: string = claims['custom:role']
 
+    // Trainee's own progress — accessible without COACH role
+    if (resource.endsWith('/progress') && !id) return getOwnProgress(event, userId)
+
     if (role !== 'COACH') return forbidden('Only coaches can access this resource')
 
     if (resource.endsWith('/trainees') && !id) return listTrainees(userId)
     if (resource.endsWith('/{id}') && id) return getTrainee(userId, id)
     if (resource.endsWith('/sessions') && id) return getTraineeSessions(event, userId, id)
     if (resource.endsWith('/progress') && id) return getTraineeProgress(event, userId, id)
-    if (resource.endsWith('/progress') && !id) return getOwnProgress(event, userId)
     return notFound()
   } catch (err) {
     console.error(err)

@@ -31,4 +31,10 @@ export const traineesApi = {
     const q = range ? `&from=${range.from}&to=${range.to}` : ''
     return api.get<{ exerciseId: string; dataPoints: ProgressDataPoint[] }>(base + q)
   },
+
+  ownProgress: (exerciseId: string, range?: { from: string; to: string }) => {
+    const base = `/v1/progress?exerciseId=${exerciseId}`
+    const q = range ? `&from=${range.from}&to=${range.to}` : ''
+    return api.get<{ exerciseId: string; dataPoints: ProgressDataPoint[] }>(base + q)
+  },
 }
